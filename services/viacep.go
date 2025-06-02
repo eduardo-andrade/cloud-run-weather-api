@@ -28,9 +28,9 @@ func GetLocationByCEP(cep string) (*models.ViaCEPResponse, error) {
 		return nil, err
 	}
 
-	if location.Localidade == "" {
-		log.Println("[ERROR] Localidade vazia para o CEP:", cep)
-		return nil, errors.New("can not find zipcode")
+	if location.HasError() {
+		log.Println("[ERROR] CEP não encontrado:", cep)
+		return nil, errors.New("zipcode not found")
 	}
 
 	log.Println("[DEBUG] Localidade encontrada:", location.Localidade)

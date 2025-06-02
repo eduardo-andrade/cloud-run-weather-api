@@ -35,14 +35,14 @@ func GetWeatherHandler(w http.ResponseWriter, r *http.Request) {
 	location, err := services.GetLocationByCEP(cep)
 	if err != nil {
 		log.Printf("Error fetching location by CEP: %v\n", err)
-		http.Error(w, "error looking up zipcode", http.StatusInternalServerError)
+		if err.Error() == "zipcode not found" {
+			http.Error(w, err.Error(), http.StatusNotFound)
+		} else {
+			http.Error(w, "error looking up zipcode", http.StatusInternalServerError)
+		}
 		return
 	}
-	if location.Localidade == "" {
-		log.Println("Error: location not found for CEP")
-		http.Error(w, "can not find zipcode", http.StatusNotFound)
-		return
-	}
+
 	log.Printf("Location found: %v\n", location.Localidade)
 
 	tempC, err := services.GetTemperature(location.Localidade)
