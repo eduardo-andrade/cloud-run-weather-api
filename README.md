@@ -153,7 +153,7 @@ Os valores representam:
 
 - O CEP deve conter **8 dígitos numéricos**, sem traços ou espaços.
 
-### ❌ Erro: `can not find zipcode`
+### ❌ Erro: `zipcode not found`
 
 - O CEP informado não existe ou não foi encontrado pela API do ViaCEP.
 
